@@ -1,0 +1,135 @@
+version: "2.0"
+
+rules:
+
+- rule: Просит перефразировать в случае низкой точности распознавания намерения
+  steps:
+  - intent: nlu_fallback
+  - action: utter_please_rephrase
+  - action: action_default_fallback
+
+- rule: Бот стартует - выпадает приветствие
+  conversation_start: true
+  steps:
+  - intent: start
+  - action: utter_greet
+
+- rule: Стоп бота
+  steps:
+  - intent: stop
+  - action: utter_goodbye
+  - action: action_restart
+
+- rule: ничего не делает, когда ОК
+  steps:
+  - intent: ok
+  - action: action_listen
+
+- rule: Приветствует пользователя, когда тот начинает диалог с фразы приветствия
+  conversation_start: true
+  steps:
+  - intent: greet
+  - action: utter_greet 
+
+- rule: Обращается по имени, если пользователь представился
+  condition:
+  - slot_was_set:
+    - PER: true
+  steps:
+  - intent: collect_user_person
+  - action: utter_welcome_user
+
+- rule: Бот сообщает своё имя, когда пользователь спрашивает
+  steps:
+  - intent: bot_name
+  - action: utter_bot_name
+
+- rule: Сообщает, что не умеет общаться просто так
+  steps:
+  - intent: chat
+  - action: utter_chat
+  
+- rule: Ответ на оскорбление
+  steps:
+  - intent: insult
+  - action: utter_insult
+
+- rule: Ответ на запрос о навыках
+  steps:
+  - intent: skills
+  - action: utter_skills
+  - action: utter_skills_other
+  
+- rule: Прощается с пользователем
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+  - action: action_restart
+
+- rule: Выдаёт инфу по ковиду
+  steps:
+  - intent: about_covid
+  - action: utter_about_covid
+
+- rule: Если речь о животных возвращает на предыдущий диалог
+  condition:
+  - slot_was_set:
+    - animal: true
+  steps:
+  - intent: veterinarian
+  - action: utter_veterinarian
+  - action: action_back 
+
+- rule: Недостаточно данных для диагноза (горло)
+  steps:
+  - intent: sore_throat
+  - action: utter_more
+  - action: action_back
+
+- rule: Недостаточно данных для диагноза (чихание)
+  steps:
+  - intent: sneeze
+  - action: utter_more
+  - action: action_back  
+
+- rule: Недостаточно данных для диагноза (ринит)
+  steps:
+  - intent: rhinitis
+  - action: utter_more
+  - action: action_back
+
+- rule: Недостаточно данных для диагноза (кашель)
+  steps:
+  - intent: cough
+  - action: utter_more
+  - action: action_back
+
+- rule: Проверяет адекватна ли температура
+  steps:
+  - intent: fever
+  - action: action_check_degrees_rule
+  - action: action_back
+  
+- rule: Недостаточно данных для диагноза (слабость)
+  steps:
+  - intent: fatigue
+  - action: utter_more
+  - action: action_back
+  
+- rule: Недостаточно данных для диагноза (мышечная боль)
+  steps:
+  - intent: muscle_pain
+  - action: utter_more
+  - action: action_back
+
+- rule: Недостаточно данных для диагноза (головная боль)
+  steps:
+  - intent: headache
+  - action: utter_more
+  - action: action_back
+
+- rule: Недостаточно данных для диагноза (аносмия)
+  steps:
+  - intent: anosmia
+  - action: utter_more
+  - action: action_back

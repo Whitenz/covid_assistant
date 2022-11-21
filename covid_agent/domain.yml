@@ -1,0 +1,146 @@
+version: "2.0"
+
+intents:
+  - nlu_fallback
+  - greet
+  - bot_name
+  - bot_challenge
+  - collect_user_person
+  - chat
+  - goodbye
+  - request_consultation
+  - cough+fever+fatigue+muscle_pain+headache+anosmia
+  - sore_throat+sneeze+rhinitis+cough+fever
+  - drugs
+  - thankful
+  - cancel
+  - insult
+  - skills
+  - sore_throat
+  - sneeze
+  - rhinitis
+  - cough
+  - fever
+  - fatigue
+  - muscle_pain
+  - headache
+  - anosmia
+  - start
+  - stop
+  - about_covid
+  - veterinarian
+  - ok
+  - bad
+
+entities:
+  - PER
+  - covid
+  - animal
+  - drug
+  - degrees
+  - ent_throat
+  - ent_sneeze
+  - ent_rhinitis
+  - ent_cough
+  - ent_temperature
+  - ent_fatigue
+  - ent_muscle
+  - ent_head
+  - ent_smell
+  
+slots:
+  PER:
+    type: text
+    influence_conversation: true
+    #auto_fill: true
+    
+  animal:
+    type: text
+    influence_conversation: true
+    
+  degrees:
+    type: text
+    # min_value: 34.5
+    # max_value: 42
+    influence_conversation: true    
+    
+responses:
+  utter_please_rephrase:
+  - text: "Я не совсем понял что Вы имеете ввиду. Перефразируйте пожалуйста."
+
+  utter_greet:
+  - text: "Здравствуйте!"
+  - text: "Приветствую Вас!"
+
+  utter_bot_name:
+  - text: "Меня зовут Илья. Это в честь моего создателя!"
+  - text: "Меня назвали в честь разработчика - Илья"
+
+  utter_iamabot:
+  - text: "Я бот, а не живой человек. Но скорее всего я смогу Вам помочь."
+  - text: "Я интеллектуальный бот и постараюсь Вам помочь."
+  
+  utter_welcome_user:
+  - text: "Рад знакомству, {PER}"
+  - text: "Приятно познакомиться, {PER}"
+  
+  utter_chat:
+  - text: "Извините, я бот-консультант и пока не умею свободно общаться на любые темы."
+  - text: "Извините, но пока я не могу поддержать эту тему"
+
+  utter_goodbye:
+  - text: "Не болейте! Всего Вам доброго."
+  - text: "Поправляйтесь скорее! До свидания."
+  - text: "Выздоравливайте поскорее. До свидания."
+  
+  utter_collect_anamnesis:
+  - text: "Я постараюсь Вам помочь. Какие симптомы Вас беспокоят? Пожалуйста, опишите все симптомы в одном предложение."  
+  - text: "Расскажите что Вас беспокоит? Пожалуйста, опишите все симптомы в одном предложение."
+  
+  utter_coronavirus:
+  - text: "По Вашим симптомам можно предположить, что у Вас коронавирусная инфекция. Рекомендую незамедлительно обратиться к врачу, не занимайтесь самолечением."
+
+  utter_about_covid:
+  - text: "Подробную информацию о коронавирусе Вы можете почитать на сайте https://стопкоронавирус.рф"
+  
+  utter_cold:
+  - text: "По Вашим симптомам можно предположить, что у Вас простуда. Специальное лечение не требуется, Вам нужен отдых и покой. Но если Вам станет хуже незамедлительно обращайтесь к врачу!"
+  
+  utter_no_drugs:
+  - text: "Извините, но я не могу назначить Вам лекарство. Для этого Вам потребуется обратиться к врачу."
+  - text: "Извините, но Вам необходимо обратиться к врачу для назначения лекарственных препаратов."
+  
+  utter_thankful:
+  - text: "Спасибо, что обратились. Надеюсь я смог Вам помочь."
+  - text: "Спасибо. Рад был помочь."
+  
+  utter_cancel:
+  - text: "Если понадоблюсь - дайте знать"
+  
+  utter_insult:
+  - text: "Кто как обзывается, тот сам так и называется"
+
+  utter_skills:
+  - text: "Моя задача выявить возможность заболевания COVID-19. Для этого опишите ВСЕ ваши симптомы в одном предложении."
+
+  utter_skills_other:
+  - text: "Также умею отвечать на фразы приветствия, могу представиться, запомнить Ваше имя и еще пару вещей. Но я продолжаю учиться!"
+
+  utter_more:
+  - text: "Для диагностики заболевания мне нужно больше данных. Опишите пожалуйста все Ваши симптомы в одной строке."
+  - text: "На основании этих симптомов я не смогу предположить чем Вы больны."
+
+  utter_veterinarian:
+  - text: "Мне жаль, но я не разбираюсь в болезнях животных"
+
+  utter_bad:
+  - text: "Все будет хорошо!"
+  
+actions:
+  - action_check_degrees_rule
+  - action_check_degrees_stories
+  - action_deactivate_loop
+
+session_config:
+  session_expiration_time: 30
+  carry_over_slots_to_new_session: true

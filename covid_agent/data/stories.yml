@@ -1,0 +1,57 @@
+version: "2.0"
+
+stories:
+
+- story: Сразу перечислил симптомы простуды -> спросил о лекарствах
+  steps:
+  - intent: sore_throat+sneeze+rhinitis+cough+fever
+  - action: action_check_degrees_stories
+  - action: utter_cold
+  - intent: drugs
+  - action: utter_no_drugs
+
+- story: Сразу перечислил симптомы коронавируса -> спросил о лекарствах
+  steps:
+  - intent: cough+fever+fatigue+muscle_pain+headache+anosmia
+  - action: action_check_degrees_stories
+  - action: utter_coronavirus
+  - action: utter_about_covid
+  - intent: bad
+  - action: utter_bad
+  - intent: drugs
+  - action: utter_no_drugs
+  
+- story: Спросил с кем говорит -> передумал говорить с ботом
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+  - intent: cancel
+  - action: utter_cancel
+  - action: action_restart
+  
+- story: Пользователь запросил помощь -> симптомы коронавируса -> лекарства-> благодарность
+  steps:
+  - intent: request_consultation
+  - action: utter_collect_anamnesis
+  - intent: cough+fever+fatigue+muscle_pain+headache+anosmia
+  - action: action_check_degrees_stories
+  - action: utter_coronavirus
+  - action: utter_about_covid
+  - intent: bad
+  - action: utter_bad
+  - intent: drugs
+  - action: utter_no_drugs
+  - intent: thankful
+  - action: utter_thankful
+  
+- story: Пользователь запросил помощь -> симптомы простуды -> лекарства-> благодарность
+  steps:
+  - intent: request_consultation
+  - action: utter_collect_anamnesis
+  - intent: sore_throat+sneeze+rhinitis+cough+fever
+  - action: action_check_degrees_stories
+  - action: utter_cold
+  - intent: drugs
+  - action: utter_no_drugs
+  - intent: thankful
+  - action: utter_thankful
